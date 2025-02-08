@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Python,闭包," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="在 Python 中，闭包通常是定义在另一个函数内部的函数。这个内部函数抓取在其外层作用域中定义的对象，并将它们与内部函数对象本身关联起来。由此产生的组合称为闭包。在Python中，闭包可以很轻松的实现。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python 闭包">
+<meta property="og:url" content="http://example.com/2025/02/08/Python-%E9%97%AD%E5%8C%85/index.html">
+<meta property="og:site_name" content="WangPeiKe&#39;s Blog">
+<meta property="og:description" content="在 Python 中，闭包通常是定义在另一个函数内部的函数。这个内部函数抓取在其外层作用域中定义的对象，并将它们与内部函数对象本身关联起来。由此产生的组合称为闭包。在Python中，闭包可以很轻松的实现。">
+<meta property="og:locale">
+<meta property="article:published_time" content="2025-02-08T15:05:48.000Z">
+<meta property="article:modified_time" content="2025-02-08T15:29:39.898Z">
+<meta property="article:author" content="WangPeiKe">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="闭包">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://example.com/2025/02/08/Python-闭包/"/>
+
+
+
+
+
+  <title>Python 闭包 | WangPeiKe's Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">WangPeiKe's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Void Matrix</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/02/08/Python-%E9%97%AD%E5%8C%85/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WangPeiKe's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Python 闭包</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2025-02-08T23:05:48+08:00">
+                2025-02-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <meta name="referrer" content="no-referrer">
+
+<p>在 Python 中，闭包通常是定义在另一个函数内部的函数。这个内部函数抓取在其外层作用域中定义的对象，并将它们与内部函数对象本身关联起来。由此产生的组合称为闭包。在Python中，闭包可以很轻松的实现。</p>
+<span id="more"></span>
+
+<h2 id="close-closure-和-inner-function"><a href="#close-closure-和-inner-function" class="headerlink" title="close closure 和 inner function"></a>close closure 和 inner function</h2><p>在Python中，所有的闭包都是内部函数，inner function，但不是所有的inner function都是闭包，闭包要求返回内部函数的一个对象。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 这是闭包</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">outer_function</span>():</span><br><span class="line">    x = <span class="number">10</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">inner_function</span>():</span><br><span class="line">        <span class="built_in">print</span>(x)</span><br><span class="line">    <span class="keyword">return</span> inner_function</span><br><span class="line"></span><br><span class="line"><span class="comment"># 这不是闭包</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">outer_function</span>():</span><br><span class="line">    x = <span class="number">10</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">inner_function</span>():</span><br><span class="line">        <span class="built_in">print</span>(x)</span><br></pre></td></tr></table></figure>
+
+<h2 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h2><p>inner function可以访问的变量作用域很广泛，除了简单的全局变量和inner function的局部变量，还可以访问outter function的变量，包括更新。即使outer function已经返回，inner function仍然可以访问outer function的变量。这和C++中的变量捕获范围非常不同。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">def</span> <span class="title function_">outer_func</span>():</span><br><span class="line"><span class="meta">... </span>    name = <span class="string">&quot;Pythonista&quot;</span></span><br><span class="line"><span class="meta">... </span>    <span class="keyword">return</span> <span class="keyword">lambda</span>: <span class="built_in">print</span>(<span class="string">f&quot;Hello, <span class="subst">&#123;name&#125;</span>!&quot;</span>)</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>greeter = outer_func()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>greeter()</span><br><span class="line">Hello, Pythonista!</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">def</span> <span class="title function_">outer_func</span>(<span class="params">outer_arg</span>):</span><br><span class="line"><span class="meta">... </span>    local_var = <span class="string">&quot;Outer local variable&quot;</span></span><br><span class="line"><span class="meta">... </span>    <span class="keyword">def</span> <span class="title function_">closure</span>():</span><br><span class="line"><span class="meta">... </span>        <span class="built_in">print</span>(outer_arg)</span><br><span class="line"><span class="meta">... </span>        <span class="built_in">print</span>(local_var)</span><br><span class="line"><span class="meta">... </span>        <span class="built_in">print</span>(another_local_var)</span><br><span class="line"><span class="meta">... </span>    another_local_var = <span class="string">&quot;Another outer local variable&quot;</span></span><br><span class="line"><span class="meta">... </span>    <span class="keyword">return</span> closure</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>closure = outer_func(<span class="string">&quot;Outer argument&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>closure()</span><br><span class="line">Outer argument</span><br><span class="line">Outer local variable</span><br><span class="line">Another outer local variable</span><br></pre></td></tr></table></figure>
+<h2 id="可变对象和不可变对象"><a href="#可变对象和不可变对象" class="headerlink" title="可变对象和不可变对象"></a>可变对象和不可变对象</h2><p>当闭包修改不可变对象时，需要使用<code>nonlocal</code>关键字。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">def</span> <span class="title function_">outer_func</span>():</span><br><span class="line"><span class="meta">... </span>    x = <span class="number">10</span></span><br><span class="line"><span class="meta">... </span>    <span class="keyword">def</span> <span class="title function_">inner_func</span>():</span><br><span class="line"><span class="meta">... </span>        <span class="keyword">nonlocal</span> x</span><br><span class="line"><span class="meta">... </span>        x += <span class="number">1</span></span><br><span class="line"><span class="meta">... </span>        <span class="built_in">print</span>(x)</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">return</span> inner_func</span><br></pre></td></tr></table></figure>
+
+<p>可变变量则可以直接修改</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">def</span> <span class="title function_">make_appender</span>():</span><br><span class="line"><span class="meta">... </span>    items = []</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">def</span> <span class="title function_">appender</span>(<span class="params">new_item</span>):</span><br><span class="line"><span class="meta">... </span>        items.append(new_item)</span><br><span class="line"><span class="meta">... </span>        <span class="keyword">return</span> items</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">return</span> appender</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>appender = make_appender()</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>appender(<span class="string">&quot;First item&quot;</span>)</span><br><span class="line">[<span class="string">&#x27;First item&#x27;</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>appender(<span class="string">&quot;Second item&quot;</span>)</span><br><span class="line">[<span class="string">&#x27;First item&#x27;</span>, <span class="string">&#x27;Second item&#x27;</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>appender(<span class="string">&quot;Third item&quot;</span>)</span><br><span class="line">[<span class="string">&#x27;First item&#x27;</span>, <span class="string">&#x27;Second item&#x27;</span>, <span class="string">&#x27;Third item&#x27;</span>]</span><br></pre></td></tr></table></figure>
+
+<h2 id="闭包的使用场景"><a href="#闭包的使用场景" class="headerlink" title="闭包的使用场景"></a>闭包的使用场景</h2><h3 id="保存状态-状态函数"><a href="#保存状态-状态函数" class="headerlink" title="保存状态&#x2F;状态函数"></a>保存状态&#x2F;状态函数</h3><p>闭包可以保存状态，例如计数器。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">def</span> <span class="title function_">counter</span>():</span><br><span class="line"><span class="meta">... </span>    count = <span class="number">0</span></span><br><span class="line"><span class="meta">... </span>    <span class="keyword">def</span> <span class="title function_">increment</span>():</span><br><span class="line"><span class="meta">... </span>        <span class="keyword">nonlocal</span> count</span><br><span class="line"><span class="meta">... </span>        count += <span class="number">1</span></span><br><span class="line"><span class="meta">... </span>        <span class="keyword">return</span> count</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">return</span> increment</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>increment = counter()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>increment()</span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>increment()</span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>increment()</span><br><span class="line"><span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">def</span> <span class="title function_">make_root_calculator</span>(<span class="params">root_degree, precision=<span class="number">2</span></span>):</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">def</span> <span class="title function_">root_calculator</span>(<span class="params">number</span>):</span><br><span class="line"><span class="meta">... </span>        <span class="keyword">return</span> <span class="built_in">round</span>(<span class="built_in">pow</span>(number, <span class="number">1</span> / root_degree), precision)</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">return</span> root_calculator</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>square_root = make_root_calculator(<span class="number">2</span>, <span class="number">4</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>square_root(<span class="number">42</span>)</span><br><span class="line"><span class="number">6.4807</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>cubic_root = make_root_calculator(<span class="number">3</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>cubic_root(<span class="number">42</span>)</span><br><span class="line"><span class="number">3.48</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">def</span> <span class="title function_">cumulative_average</span>():</span><br><span class="line"><span class="meta">... </span>    data = []</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">def</span> <span class="title function_">average</span>(<span class="params">value</span>):</span><br><span class="line"><span class="meta">... </span>        data.append(value)</span><br><span class="line"><span class="meta">... </span>        <span class="keyword">return</span> <span class="built_in">sum</span>(data) / <span class="built_in">len</span>(data)</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">return</span> average</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>stream_average = cumulative_average()</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>stream_average(<span class="number">12</span>)</span><br><span class="line"><span class="number">12.0</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>stream_average(<span class="number">13</span>)</span><br><span class="line"><span class="number">12.5</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>stream_average(<span class="number">11</span>)</span><br><span class="line"><span class="number">12.0</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>stream_average(<span class="number">10</span>)</span><br><span class="line"><span class="number">11.5</span></span><br></pre></td></tr></table></figure>
+<h3 id="回调函数"><a href="#回调函数" class="headerlink" title="回调函数"></a>回调函数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">def</span> <span class="title function_">on_click</span>(<span class="params">callback</span>):</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">def</span> <span class="title function_">handle_click</span>(<span class="params">event</span>):</span><br><span class="line"><span class="meta">... </span>        callback(event)</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">return</span> handle_click</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">def</span> <span class="title function_">handle_click</span>(<span class="params">event</span>):</span><br><span class="line"><span class="meta">... </span>    <span class="built_in">print</span>(<span class="string">f&quot;Clicked at <span class="subst">&#123;event.x&#125;</span>, <span class="subst">&#123;event.y&#125;</span>&quot;</span>)</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>on_click(handle_click)</span><br></pre></td></tr></table></figure>
+
+<h3 id="装饰器"><a href="#装饰器" class="headerlink" title="装饰器"></a>装饰器</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">def</span> <span class="title function_">decorator</span>(<span class="params">function</span>):</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">def</span> <span class="title function_">closure</span>():</span><br><span class="line"><span class="meta">... </span>        <span class="built_in">print</span>(<span class="string">&quot;Doing something before calling the function.&quot;</span>)</span><br><span class="line"><span class="meta">... </span>        function()</span><br><span class="line"><span class="meta">... </span>        <span class="built_in">print</span>(<span class="string">&quot;Doing something after calling the function.&quot;</span>)</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">return</span> closure</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>@decorator</span><br><span class="line"><span class="meta">... </span><span class="keyword">def</span> <span class="title function_">greet</span>():</span><br><span class="line"><span class="meta">... </span>    <span class="built_in">print</span>(<span class="string">&quot;Hi, Pythonista!&quot;</span>)</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>greet()</span><br><span class="line">Doing something before calling the function.</span><br><span class="line">Hi, Pythonista!</span><br><span class="line">Doing something after calling the function.</span><br></pre></td></tr></table></figure>
+
+<h3 id="工厂函数"><a href="#工厂函数" class="headerlink" title="工厂函数"></a>工厂函数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">def</span> <span class="title function_">make_root_calculator</span>(<span class="params">root_degree, precision=<span class="number">2</span></span>):</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">def</span> <span class="title function_">root_calculator</span>(<span class="params">number</span>):</span><br><span class="line"><span class="meta">... </span>        <span class="keyword">return</span> <span class="built_in">round</span>(<span class="built_in">pow</span>(number, <span class="number">1</span> / root_degree), precision)</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">return</span> root_calculator</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>square_root = make_root_calculator(<span class="number">2</span>, <span class="number">4</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>square_root(<span class="number">42</span>)</span><br><span class="line"><span class="number">6.4807</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>cubic_root = make_root_calculator(<span class="number">3</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>cubic_root(<span class="number">42</span>)</span><br><span class="line"><span class="number">3.48</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="缓存-记忆"><a href="#缓存-记忆" class="headerlink" title="缓存&#x2F;记忆"></a>缓存&#x2F;记忆</h3><blockquote>
+<p>尽管可以使用闭包实现缓存&#x2F;记忆，但Python有更高效的方式。Python 标准库中内置了 <code>memoization</code>。如果您需要在项目中使用缓存，可以使用 <code>functools</code> 模块中的 <code>@cache</code> 或 <code>@lru_cache</code>。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">def</span> <span class="title function_">memoize</span>(<span class="params">function</span>):</span><br><span class="line"><span class="meta">... </span>    cache = &#123;&#125;</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">def</span> <span class="title function_">closure</span>(<span class="params">number</span>):</span><br><span class="line"><span class="meta">... </span>        <span class="keyword">if</span> number <span class="keyword">not</span> <span class="keyword">in</span> cache:</span><br><span class="line"><span class="meta">... </span>            cache[number] = function(number)</span><br><span class="line"><span class="meta">... </span>        <span class="keyword">return</span> cache[number]</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">return</span> closure</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> time <span class="keyword">import</span> sleep</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">slow_operation</span>(<span class="params">number</span>):</span><br><span class="line">    sleep(<span class="number">0.5</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> timeit <span class="keyword">import</span> timeit</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>timeit(</span><br><span class="line"><span class="meta">... </span>    <span class="string">&quot;[slow_operation(number) for number in [2, 3, 4, 2, 3, 4]]&quot;</span>,</span><br><span class="line"><span class="meta">... </span>    <span class="built_in">globals</span>=<span class="built_in">globals</span>(),</span><br><span class="line"><span class="meta">... </span>    number=<span class="number">1</span>,</span><br><span class="line"><span class="meta">... </span>)</span><br><span class="line"><span class="number">3.02610950000053</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>@memoize</span><br><span class="line"><span class="meta">... </span><span class="keyword">def</span> <span class="title function_">slow_operation</span>(<span class="params">number</span>):</span><br><span class="line"><span class="meta">... </span>    sleep(<span class="number">0.5</span>)</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>timeit(</span><br><span class="line"><span class="meta">... </span>    <span class="string">&quot;[slow_operation(number) for number in [2, 3, 4, 2, 3, 4]]&quot;</span>,</span><br><span class="line"><span class="meta">... </span>    <span class="built_in">globals</span>=<span class="built_in">globals</span>(),</span><br><span class="line"><span class="meta">... </span>    number=<span class="number">1</span>,</span><br><span class="line"><span class="meta">... </span>)</span><br><span class="line"><span class="number">1.5151869590008573</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="面向对象的封装"><a href="#面向对象的封装" class="headerlink" title="面向对象的封装"></a>面向对象的封装</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">Stack</span>():</span><br><span class="line">    _items = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">push</span>(<span class="params">item</span>):</span><br><span class="line">        _items.append(item)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">pop</span>():</span><br><span class="line">        <span class="keyword">return</span> _items.pop()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">closure</span>():</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    closure.push = push</span><br><span class="line">    closure.pop = pop</span><br><span class="line">    <span class="keyword">return</span> closure</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> stack_v2 <span class="keyword">import</span> Stack</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>stack = Stack()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>stack.push(<span class="number">1</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>stack.push(<span class="number">2</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>stack.push(<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>stack.pop()</span><br><span class="line"><span class="number">3</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>stack._items</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">    ...</span><br><span class="line">AttributeError: <span class="string">&#x27;function&#x27;</span> <span class="built_in">object</span> has no attribute <span class="string">&#x27;_items&#x27;</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+            <a href="/tags/%E9%97%AD%E5%8C%85/" rel="tag"># 闭包</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2025/02/07/%E8%87%AA%E5%B7%B1%E7%9A%84%E7%B1%BB%E9%93%B6%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95/" rel="next" title="自己的类银游戏开发记录-1">
+                <i class="fa fa-chevron-left"></i> 自己的类银游戏开发记录-1
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#close-closure-%E5%92%8C-inner-function"><span class="nav-number">1.</span> <span class="nav-text">close closure 和 inner function</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">2.</span> <span class="nav-text">作用域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E5%8F%98%E5%AF%B9%E8%B1%A1%E5%92%8C%E4%B8%8D%E5%8F%AF%E5%8F%98%E5%AF%B9%E8%B1%A1"><span class="nav-number">3.</span> <span class="nav-text">可变对象和不可变对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AD%E5%8C%85%E7%9A%84%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">4.</span> <span class="nav-text">闭包的使用场景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%9D%E5%AD%98%E7%8A%B6%E6%80%81-%E7%8A%B6%E6%80%81%E5%87%BD%E6%95%B0"><span class="nav-number">4.1.</span> <span class="nav-text">保存状态&#x2F;状态函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0"><span class="nav-number">4.2.</span> <span class="nav-text">回调函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A3%85%E9%A5%B0%E5%99%A8"><span class="nav-number">4.3.</span> <span class="nav-text">装饰器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%A5%E5%8E%82%E5%87%BD%E6%95%B0"><span class="nav-number">4.4.</span> <span class="nav-text">工厂函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%93%E5%AD%98-%E8%AE%B0%E5%BF%86"><span class="nav-number">4.5.</span> <span class="nav-text">缓存&#x2F;记忆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%B0%81%E8%A3%85"><span class="nav-number">4.6.</span> <span class="nav-text">面向对象的封装</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WangPeiKe</span>
+
+  
+</div>
+
+<!-- 
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+-->
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

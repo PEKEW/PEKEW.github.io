@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="zh">
+<html class="theme-next pisces use-motion" lang="zh">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="游戏开发,开发记录,游戏设计,编程,Unity教程," />
 
 
 
@@ -86,12 +86,12 @@
 
 
 
-<meta name="description" content="打算开发一款自己心目中的类银游戏，开一个贴作为开发记录，顺便学习熟悉unity  基本框架搭建目前这个阶段的首要任务是把基本原型先开发出来，集中快速开发，后续在考虑分离脚本和使用状态机进行阶段性重构 核心功能这个阶段实现最简单最核心的玩法，例如移动，跳跃，攻击等，这些功能暂时都放在一个脚本里，不考虑解耦。 场景搭建首先先搭建一个基本的场景  黑色部分是地面或者墙面 红色部分是敌人 白色胶囊体">
+<meta name="description" content="打算开发一款自己心目中的类银游戏，开一个贴作为开发记录，顺便学习熟悉unity">
 <meta property="og:type" content="article">
 <meta property="og:title" content="自己的类银游戏开发记录-1">
 <meta property="og:url" content="http://example.com/2025/02/07/%E8%87%AA%E5%B7%B1%E7%9A%84%E7%B1%BB%E9%93%B6%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95/index.html">
 <meta property="og:site_name" content="WangPeiKe&#39;s Blog">
-<meta property="og:description" content="打算开发一款自己心目中的类银游戏，开一个贴作为开发记录，顺便学习熟悉unity  基本框架搭建目前这个阶段的首要任务是把基本原型先开发出来，集中快速开发，后续在考虑分离脚本和使用状态机进行阶段性重构 核心功能这个阶段实现最简单最核心的玩法，例如移动，跳跃，攻击等，这些功能暂时都放在一个脚本里，不考虑解耦。 场景搭建首先先搭建一个基本的场景  黑色部分是地面或者墙面 红色部分是敌人 白色胶囊体">
+<meta property="og:description" content="打算开发一款自己心目中的类银游戏，开一个贴作为开发记录，顺便学习熟悉unity">
 <meta property="og:locale">
 <meta property="og:image" content="https://i0.hdslb.com/bfs/article/15927d42f9400804d71172e388eb33c41629093956.png">
 <meta property="og:image" content="https://i0.hdslb.com/bfs/article/a185d5cb158fe313272472dbc1357e491629093956.png">
@@ -99,8 +99,13 @@
 <meta property="og:image" content="https://i0.hdslb.com/bfs/article/54b52ae3f81f1e91af2550b462f8c1ba1629093956.png">
 <meta property="og:image" content="https://i0.hdslb.com/bfs/article/4231d833be0ea983023852f448d2dac31629093956.png">
 <meta property="article:published_time" content="2025-02-07T13:52:50.000Z">
-<meta property="article:modified_time" content="2025-02-08T02:39:20.516Z">
+<meta property="article:modified_time" content="2025-02-08T15:05:03.687Z">
 <meta property="article:author" content="WangPeiKe">
+<meta property="article:tag" content="游戏开发">
+<meta property="article:tag" content="开发记录">
+<meta property="article:tag" content="游戏设计">
+<meta property="article:tag" content="编程">
+<meta property="article:tag" content="Unity教程">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i0.hdslb.com/bfs/article/15927d42f9400804d71172e388eb33c41629093956.png">
 
@@ -110,7 +115,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '',
-    scheme: 'Muse',
+    scheme: 'Pisces',
     version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
     fancybox: true,
@@ -194,7 +199,7 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/%20" rel="section">
+          <a href="/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
@@ -204,7 +209,7 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/tags/%20" rel="section">
+          <a href="/tags/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
@@ -214,7 +219,7 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/categories/%20" rel="section">
+          <a href="/categories/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
@@ -224,7 +229,7 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives/%20" rel="section">
+          <a href="/archives/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
@@ -337,6 +342,9 @@
 <blockquote>
 <p>打算开发一款自己心目中的类银游戏，开一个贴作为开发记录，顺便学习熟悉unity</p>
 </blockquote>
+<span id="more"></span>
+
+
 <h1 id="基本框架搭建"><a href="#基本框架搭建" class="headerlink" title="基本框架搭建"></a>基本框架搭建</h1><p>目前这个阶段的首要任务是把基本原型先开发出来，集中快速开发，后续在考虑分离脚本和使用状态机进行阶段性重构</p>
 <h2 id="核心功能"><a href="#核心功能" class="headerlink" title="核心功能"></a>核心功能</h2><p>这个阶段实现最简单最核心的玩法，例如移动，跳跃，攻击等，这些功能暂时都放在一个脚本里，不考虑解耦。</p>
 <h3 id="场景搭建"><a href="#场景搭建" class="headerlink" title="场景搭建"></a>场景搭建</h3><p>首先先搭建一个基本的场景<br><img src="https://i0.hdslb.com/bfs/article/15927d42f9400804d71172e388eb33c41629093956.png"></p>
@@ -435,6 +443,20 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" rel="tag"># 游戏开发</a>
+          
+            <a href="/tags/%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95/" rel="tag"># 开发记录</a>
+          
+            <a href="/tags/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/" rel="tag"># 游戏设计</a>
+          
+            <a href="/tags/%E7%BC%96%E7%A8%8B/" rel="tag"># 编程</a>
+          
+            <a href="/tags/Unity%E6%95%99%E7%A8%8B/" rel="tag"># Unity教程</a>
+          
+        </div>
+      
 
       
       
@@ -453,6 +475,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2025/02/08/Python-%E9%97%AD%E5%8C%85/" rel="prev" title="Python 闭包">
+                Python 闭包 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -527,9 +553,9 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives/%20%7C%7C%20archive">
+                <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -537,6 +563,15 @@
 
             
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
             
 
           </nav>
@@ -606,7 +641,7 @@
 
 
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
 
 
 
@@ -707,6 +742,13 @@
 
   
   
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
 
   
   <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
