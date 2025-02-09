@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="游戏开发,开发记录,游戏设计,编程,Unity教程," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="上次把所有的基本操作全塞在一个脚本里实现，这次为分类每个状态，使用状态机做准备">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自己的类银游戏开发记录-2">
+<meta property="og:url" content="http://example.com/2025/02/09/%E8%87%AA%E5%B7%B1%E7%9A%84%E7%B1%BB%E9%93%B6%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95-2/index.html">
+<meta property="og:site_name" content="WangPeiKe&#39;s Blog">
+<meta property="og:description" content="上次把所有的基本操作全塞在一个脚本里实现，这次为分类每个状态，使用状态机做准备">
+<meta property="og:locale">
+<meta property="og:image" content="https://i0.hdslb.com/bfs/article/f45ab3de839606f98942b7e11e140ce61629093956.png">
+<meta property="og:image" content="https://i0.hdslb.com/bfs/article/010adab76b22493c23c40c413091d9081629093956.png">
+<meta property="og:image" content="https://i0.hdslb.com/bfs/article/0ab1b4fe938494d912b929a565f0637c1629093956.png">
+<meta property="og:image" content="https://i0.hdslb.com/bfs/article/aef7e7966b67dbbcfa6e1223b66ce7cc1629093956.png">
+<meta property="article:published_time" content="2025-02-09T07:47:56.000Z">
+<meta property="article:modified_time" content="2025-02-09T08:13:45.366Z">
+<meta property="article:author" content="WangPeiKe">
+<meta property="article:tag" content="游戏开发">
+<meta property="article:tag" content="开发记录">
+<meta property="article:tag" content="游戏设计">
+<meta property="article:tag" content="编程">
+<meta property="article:tag" content="Unity教程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i0.hdslb.com/bfs/article/f45ab3de839606f98942b7e11e140ce61629093956.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://example.com/2025/02/09/自己的类银游戏开发记录-2/"/>
+
+
+
+
+
+  <title>自己的类银游戏开发记录-2 | WangPeiKe's Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">WangPeiKe's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Void Matrix</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/02/09/%E8%87%AA%E5%B7%B1%E7%9A%84%E7%B1%BB%E9%93%B6%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WangPeiKe's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">自己的类银游戏开发记录-2</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2025-02-09T15:47:56+08:00">
+                2025-02-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <meta name="referrer" content="no-referrer">
+
+<blockquote>
+<p>上次把所有的基本操作全塞在一个脚本里实现，这次为分类每个状态，使用状态机做准备</p>
+</blockquote>
+<span id="more"></span>
+
+
+<h1 id="状态机"><a href="#状态机" class="headerlink" title="状态机"></a>状态机</h1><blockquote>
+<p>简单理解，状态机是游戏开发中常用的一种设计模式，用于管理对象在不同状态下的行为。</p>
+</blockquote>
+<h2 id="脚本准备"><a href="#脚本准备" class="headerlink" title="脚本准备"></a>脚本准备</h2><p>忽略上次的<code>PlayerController</code>脚本，现在需要准备几个新的脚本。</p>
+<ul>
+<li><code>Player</code> 用于控制状态行为</li>
+<li><code>PlayerState</code> 状态基类</li>
+<li><code>PlayerIdleState</code> 空闲状态</li>
+<li><code>PlayerMoveState</code> 移动状态</li>
+<li><code>PlayerStateMachine</code> 状态机</li>
+</ul>
+<h2 id="StateMachine"><a href="#StateMachine" class="headerlink" title="StateMachine"></a>StateMachine</h2><p><code>StateMachine</code>用于管理状态机，并根据当前状态执行对应行为。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">PlayerStateMachine</span></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> PlayerState currentState &#123; <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Initialize</span>(<span class="params">PlayerState _startState</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        currentState = _startState;</span><br><span class="line">        currentState.Enter();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ChangeState</span>(<span class="params">PlayerState _newState</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        currentState.Exit();</span><br><span class="line">        currentState = _newState;</span><br><span class="line">        currentState.Enter();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="Player"><a href="#Player" class="headerlink" title="Player"></a>Player</h2><p><code>Player</code>用于在<code>Update</code>中调用状态机，并根据状态机当前状态执行对应行为。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Player</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> Animator animator &#123; <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="keyword">public</span> PlayerStateMachine stateMachine &#123; <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="keyword">public</span> PlayerIdleState idleState &#123; <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="keyword">public</span> PlayerMoveState moveState &#123; <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Awake</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        stateMachine = <span class="keyword">new</span> PlayerStateMachine();</span><br><span class="line">        idleState = <span class="keyword">new</span> PlayerIdleState(<span class="keyword">this</span>, stateMachine, <span class="string">&quot;Idle&quot;</span>);</span><br><span class="line">        moveState = <span class="keyword">new</span> PlayerMoveState(<span class="keyword">this</span>, stateMachine, <span class="string">&quot;Move&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Start</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        animator = GetComponentInChildren&lt;Animator&gt;();</span><br><span class="line">        stateMachine.Initialize(idleState);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Update is called once per frame</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Update</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        stateMachine.currentState.Update();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="PlayerState"><a href="#PlayerState" class="headerlink" title="PlayerState"></a>PlayerState</h2><p><code>PlayerState</code>是状态基类，所有状态都继承自它。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">PlayerState</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">protected</span> PlayerStateMachine stateMachine;</span><br><span class="line">    <span class="keyword">protected</span> Player player;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">string</span> animBoolName;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PlayerState</span>(<span class="params">Player _player, PlayerStateMachine _stateMachine, <span class="built_in">string</span> _aniBoolName</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.player = _player;</span><br><span class="line">        <span class="keyword">this</span>.stateMachine = _stateMachine;</span><br><span class="line">        <span class="keyword">this</span>.animBoolName = _aniBoolName;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Enter</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Debug.Log(<span class="string">&quot;Enter &quot;</span> + animBoolName);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Update</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Debug.Log(<span class="string">&quot;Update &quot;</span> + animBoolName);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Exit</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Debug.Log(<span class="string">&quot;Exit &quot;</span> + animBoolName);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="PlayerMoveState-PlayerIdleState"><a href="#PlayerMoveState-PlayerIdleState" class="headerlink" title="PlayerMoveState &amp;&amp; PlayerIdleState"></a>PlayerMoveState &amp;&amp; PlayerIdleState</h2><p><code>PlayerMoveState</code>和<code>PlayerIdleState</code>是两个具体的状态，分别实现了移动和空闲的行为。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">PlayerMoveState</span> : <span class="title">PlayerState</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PlayerMoveState</span>(<span class="params">Player _player, PlayerStateMachine _stateMachine, <span class="built_in">string</span> _aniBoolName</span>) : <span class="title">base</span>(<span class="params">_player, _stateMachine, _aniBoolName</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Enter</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">base</span>.Enter();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Update</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">base</span>.Update();</span><br><span class="line">        <span class="comment">// 测试</span></span><br><span class="line">        <span class="keyword">if</span> (Input.GetKeyDown(KeyCode.Space))</span><br><span class="line">        &#123;</span><br><span class="line">            stateMachine.ChangeState(player.idleState);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Exit</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">base</span>.Exit();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">PlayerIdleState</span> : <span class="title">PlayerState</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PlayerIdleState</span>(<span class="params">Player _player, PlayerStateMachine _stateMachine, <span class="built_in">string</span> _aniBoolName</span>) : <span class="title">base</span>(<span class="params">_player, _stateMachine, _aniBoolName</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Enter</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">base</span>.Enter();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Update</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">base</span>.Update();</span><br><span class="line">        <span class="comment">// 测试</span></span><br><span class="line">        <span class="keyword">if</span> (Input.GetKeyDown(KeyCode.Space))</span><br><span class="line">        &#123;</span><br><span class="line">            stateMachine.ChangeState(player.moveState);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Exit</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">base</span>.Exit();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>通过状态机，可以把不同的状态解耦，方便管理和实现，代码也精简了很多。</p>
+<h2 id="Unity设置"><a href="#Unity设置" class="headerlink" title="Unity设置"></a>Unity设置</h2><p>为了独立测试，我们新建一个<code>Player</code>新的空2D对象, 挂载<code>Player</code>脚本。然后添加子对象<code>Animator</code>，<code>Animator</code>添加<code>Character</code>对象。</p>
+<p><code>Character</code>对象下面添加一些精灵图片，作为动画的素材。可以调整一些父子关系，方便后续做动画。</p>
+<p><code>Animator</code>添加新的属性，<code>SpriteRender</code>和<code>Animator</code></p>
+<p>新建一个<code>Animator Controller</code>，命名为<code>Player_AC</code>，设置给<code>Animator</code>的<code>Controller</code>。</p>
+<p><img src="https://i0.hdslb.com/bfs/article/f45ab3de839606f98942b7e11e140ce61629093956.png"></p>
+<p>打开<code>Animator</code>，新建<code>Idle</code>和<code>Move</code>两个动画，K帧过程在此忽略，B站上很多教程了。</p>
+<blockquote>
+<p>其实这个地方也可以不用动画，随便用一个图片，测试成功即可，后续再补美术资源。</p>
+</blockquote>
+<p>在动画窗格面板，连接好状态转移过程。</p>
+<p><img src="https://i0.hdslb.com/bfs/article/010adab76b22493c23c40c413091d9081629093956.png"></p>
+<p>设置一下转移条件，使用bool类型，和代码中的<code>animBoolName</code>对应</p>
+<p><img src="https://i0.hdslb.com/bfs/article/0ab1b4fe938494d912b929a565f0637c1629093956.png"></p>
+<p>记得把状态推出条件中的退出时间取消</p>
+<p><img src="https://i0.hdslb.com/bfs/article/aef7e7966b67dbbcfa6e1223b66ce7cc1629093956.png"></p>
+<p>给<code>PlayerState</code>的<code>Enter</code>方法和<code>Exit</code>方法添加<code>SetBool</code>方法，设置动画状态</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Enter</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// Debug.Log(&quot;Enter &quot; + animBoolName);</span></span><br><span class="line">    player.animator.SetBool(animBoolName, <span class="literal">true</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Update</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    Debug.Log(<span class="string">&quot;Update &quot;</span> + animBoolName);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Exit</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// Debug.Log(&quot;Exit &quot; + animBoolName);</span></span><br><span class="line">    player.animator.SetBool(animBoolName, <span class="literal">false</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<hr>
+<p>后续就是把之前<code>PlayerController</code>的代码，拆分到各个状态中，然后测试。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" rel="tag"># 游戏开发</a>
+          
+            <a href="/tags/%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95/" rel="tag"># 开发记录</a>
+          
+            <a href="/tags/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/" rel="tag"># 游戏设计</a>
+          
+            <a href="/tags/%E7%BC%96%E7%A8%8B/" rel="tag"># 编程</a>
+          
+            <a href="/tags/Unity%E6%95%99%E7%A8%8B/" rel="tag"># Unity教程</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2025/02/08/Python-%E9%97%AD%E5%8C%85/" rel="next" title="Python 闭包">
+                <i class="fa fa-chevron-left"></i> Python 闭包
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E6%9C%BA"><span class="nav-number">1.</span> <span class="nav-text">状态机</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%84%9A%E6%9C%AC%E5%87%86%E5%A4%87"><span class="nav-number">1.1.</span> <span class="nav-text">脚本准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#StateMachine"><span class="nav-number">1.2.</span> <span class="nav-text">StateMachine</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Player"><span class="nav-number">1.3.</span> <span class="nav-text">Player</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PlayerState"><span class="nav-number">1.4.</span> <span class="nav-text">PlayerState</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PlayerMoveState-PlayerIdleState"><span class="nav-number">1.5.</span> <span class="nav-text">PlayerMoveState &amp;&amp; PlayerIdleState</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Unity%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.6.</span> <span class="nav-text">Unity设置</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WangPeiKe</span>
+
+  
+</div>
+
+<!-- 
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+-->
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
