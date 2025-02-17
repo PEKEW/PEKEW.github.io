@@ -86,16 +86,16 @@
 
 
 
-<meta name="description" content="使用$\LaTeX$绘制各种科研图，示意图等。">
+<meta name="description" content="使用LaTeX绘制各种科研图，示意图等。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LaTex绘图指南-1-向量和范数">
 <meta property="og:url" content="http://example.com/2025/02/17/LaTex%E7%BB%98%E5%9B%BE%E6%8C%87%E5%8D%97-%E5%90%91%E9%87%8F%E5%92%8C%E8%8C%83%E6%95%B0/index.html">
 <meta property="og:site_name" content="WangPeiKe&#39;s Blog">
-<meta property="og:description" content="使用$\LaTeX$绘制各种科研图，示意图等。">
+<meta property="og:description" content="使用LaTeX绘制各种科研图，示意图等。">
 <meta property="og:locale">
 <meta property="og:image" content="https://i0.hdslb.com/bfs/article/5acfa5693f909bc05f616168c593ee3223201575.png">
 <meta property="article:published_time" content="2025-02-17T08:45:12.000Z">
-<meta property="article:modified_time" content="2025-02-17T09:16:15.462Z">
+<meta property="article:modified_time" content="2025-02-17T09:25:13.084Z">
 <meta property="article:author" content="WangPeiKe">
 <meta property="article:tag" content="Latex">
 <meta property="article:tag" content="科研">
@@ -333,14 +333,14 @@
         <meta name="referrer" content="no-referrer">
 
 <blockquote>
-<p>使用$\LaTeX$绘制各种科研图，示意图等。</p>
+<p>使用LaTeX绘制各种科研图，示意图等。</p>
 </blockquote>
 <span id="more"></span>
 
 <h1 id="代码和效果"><a href="#代码和效果" class="headerlink" title="代码和效果"></a>代码和效果</h1><figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">\documentclass</span>[border = 0.2cm, 12pt]&#123;standalone&#125;</span><br><span class="line"><span class="keyword">\usepackage</span>&#123;amsmath, amssymb, amsfonts&#125;</span><br><span class="line"><span class="keyword">\usepackage</span>&#123;color&#125;</span><br><span class="line"><span class="keyword">\usepackage</span>&#123;tikz, pgfplots&#125;</span><br><span class="line"><span class="keyword">\pgfplotsset</span>&#123;compat=newest&#125;</span><br><span class="line"><span class="keyword">\usetikzlibrary</span>&#123;shapes,snakes&#125;</span><br><span class="line"><span class="keyword">\tikzset</span>&#123;&gt;=latex&#125;</span><br><span class="line"><span class="keyword">\usetikzlibrary</span>&#123;angles,quotes&#125;</span><br><span class="line"><span class="keyword">\usepackage</span>&#123;tkz-euclide&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">\begin</span>&#123;document&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">\begin</span>&#123;tikzpicture&#125;[scale=2.5]</span><br><span class="line"></span><br><span class="line"><span class="keyword">\draw</span>[-&gt;,line width=0.7] (-1.4,0)--(1.4,0) node[above]&#123;<span class="built_in">$</span>x<span class="built_in">$</span>&#125;;</span><br><span class="line"><span class="keyword">\draw</span>[-&gt;,line width=0.7] (0,-1.4)--(0,1.4) node[right]&#123;<span class="built_in">$</span>y<span class="built_in">$</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">\draw</span>[arrows=-&gt;, line width=1.2] (0,0)--(0.6,1);</span><br><span class="line"><span class="keyword">\draw</span>[dashed, color=gray, thin] (0.6,0)--(0.6,1);</span><br><span class="line"><span class="keyword">\draw</span>[color=blue, line width=1.2] (1,0)--(1,1)--(-1,1)--(-1,-1)--(1,-1)--(1,0);</span><br><span class="line"></span><br><span class="line"><span class="keyword">\node</span> at (0.6,-0.15) &#123;<span class="built_in">$</span>x<span class="built_in">_</span>1<span class="built_in">$</span>&#125;;</span><br><span class="line"><span class="keyword">\node</span> at (0.15,1.12) &#123;<span class="built_in">$</span>x<span class="built_in">_</span>2<span class="built_in">$</span>&#125;;</span><br><span class="line"><span class="keyword">\node</span> at (0.7,1.15) &#123;<span class="built_in">$</span><span class="keyword">\boldsymbol</span>&#123;x&#125;<span class="built_in">$</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">\node</span> at (1.1,-0.2) &#123;<span class="built_in">$</span>1<span class="built_in">$</span>&#125;;</span><br><span class="line"><span class="keyword">\node</span> at (-1.2,-0.2) &#123;<span class="built_in">$</span>-1<span class="built_in">$</span>&#125;;</span><br><span class="line"><span class="keyword">\node</span> at (-0.2,1.12) &#123;<span class="built_in">$</span>1<span class="built_in">$</span>&#125;;</span><br><span class="line"><span class="keyword">\node</span> at (-0.25,-1.15) &#123;<span class="built_in">$</span>-1<span class="built_in">$</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">\end</span>&#123;tikzpicture&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">\end</span>&#123;document&#125;</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://i0.hdslb.com/bfs/article/5acfa5693f909bc05f616168c593ee3223201575.png"></p>
-<h2 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h2><h3 id="基础部分"><a href="#基础部分" class="headerlink" title="基础部分"></a>基础部分</h3><p>文档设置部分: <code>standalone</code> 是一个特殊的$\LaTeX$文档类，他会自动把输出的PDF建材到刚好包含内容的大小，十分适合绘图。<br>设置<code>border</code>表示内容周围添加的边距，<code>12pt</code>表示字体大小。</p>
+<h2 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h2><h3 id="基础部分"><a href="#基础部分" class="headerlink" title="基础部分"></a>基础部分</h3><p>文档设置部分: <code>standalone</code> 是一个特殊的LaTeX文档类，他会自动把输出的PDF建材到刚好包含内容的大小，十分适合绘图。<br>设置<code>border</code>表示内容周围添加的边距，<code>12pt</code>表示字体大小。</p>
 <h3 id="绘图部分"><a href="#绘图部分" class="headerlink" title="绘图部分"></a>绘图部分</h3><p>绘图环境使用<code>tikzpicture</code></p>
 <p><code>scale</code>表示绘图比例，基本单位是1cm，<code>scale=2.5</code>表示绘图比例为2.5，也就是说绘图中的1cm的输出实际是2.5cm。</p>
 <p><code>&gt;=latex</code>表示箭头为latex风格。常见的箭头样式：</p>
