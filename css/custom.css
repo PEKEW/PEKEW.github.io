@@ -1,0 +1,25 @@
+/* 首页标题浮现变大动画 */
+#site-title {
+  animation: titleFadeInScale 1.5s ease-out forwards;
+  opacity: 0;
+  transform: scale(0.8) translateY(20px);
+  font-size: 3.5rem !important;
+}
+
+@keyframes titleFadeInScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* 响应式调整 */
+@media screen and (max-width: 768px) {
+  #site-title {
+    font-size: 2.5rem !important;
+  }
+}
